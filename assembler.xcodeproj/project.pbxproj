@@ -7,24 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B3D4660D27DE6C2700C31573 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B3D4660C27DE6C2700C31573 /* main.c */; };
+		B32C7C4927E637C60000C09D /* preprocessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B32C7C4727E637C60000C09D /* preprocessor.cpp */; };
+		B3D4661427DE6E9600C31573 /* lexer.l in Sources */ = {isa = PBXBuildFile; fileRef = B3D4661327DE6E9600C31573 /* lexer.l */; };
+		B3D4661627DE779800C31573 /* parser.y in Sources */ = {isa = PBXBuildFile; fileRef = B3D4661527DE779800C31573 /* parser.y */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		B3D4660727DE6C2700C31573 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
+			buildActionMask = 12;
+			dstPath = "/Users/connor/Desktop/cpu-design/bin";
 			dstSubfolderSpec = 0;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B32C7C4727E637C60000C09D /* preprocessor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = preprocessor.cpp; sourceTree = "<group>"; };
+		B32C7C4A27E638580000C09D /* preprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = preprocessor.h; sourceTree = "<group>"; };
 		B3D4660927DE6C2700C31573 /* assembler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = assembler; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3D4660C27DE6C2700C31573 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		B3D4661327DE6E9600C31573 /* lexer.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = lexer.l; sourceTree = "<group>"; };
+		B3D4661527DE779800C31573 /* parser.y */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.yacc; path = parser.y; sourceTree = "<group>"; };
+		B3DECFE227E2C35F00706CB9 /* opcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = opcode.h; path = ../../opcode.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +63,11 @@
 		B3D4660B27DE6C2700C31573 /* assembler */ = {
 			isa = PBXGroup;
 			children = (
-				B3D4660C27DE6C2700C31573 /* main.c */,
+				B32C7C4A27E638580000C09D /* preprocessor.h */,
+				B3DECFE227E2C35F00706CB9 /* opcode.h */,
+				B3D4661527DE779800C31573 /* parser.y */,
+				B3D4661327DE6E9600C31573 /* lexer.l */,
+				B32C7C4727E637C60000C09D /* preprocessor.cpp */,
 			);
 			path = assembler;
 			sourceTree = "<group>";
@@ -89,7 +99,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1330;
 				TargetAttributes = {
 					B3D4660827DE6C2700C31573 = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -119,7 +129,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3D4660D27DE6C2700C31573 /* main.c in Sources */,
+				B3D4661627DE779800C31573 /* parser.y in Sources */,
+				B3D4661427DE6E9600C31573 /* lexer.l in Sources */,
+				B32C7C4927E637C60000C09D /* preprocessor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,7 +144,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -163,7 +175,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -177,11 +189,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				LEX_CASE_INSENSITIVE_SCANNER = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				YACC_GENERATE_DEBUGGING_DIRECTIVES = YES;
 			};
 			name = Debug;
 		};
@@ -191,7 +205,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -222,7 +236,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -230,30 +244,42 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				LEX_CASE_INSENSITIVE_SCANNER = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				YACC_GENERATE_DEBUGGING_DIRECTIVES = YES;
 			};
 			name = Release;
 		};
 		B3D4661127DE6C2700C31573 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q59J67R6R5;
 				ENABLE_HARDENED_RUNTIME = YES;
+				LEX = /usr/bin/flex;
+				LEXFLAGS = "-d";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				YACC = /usr/bin/bison;
+				YACC_GENERATED_FILE_STEM = InputFileStem;
 			};
 			name = Debug;
 		};
 		B3D4661227DE6C2700C31573 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q59J67R6R5;
 				ENABLE_HARDENED_RUNTIME = YES;
+				LEX = /usr/bin/flex;
+				LEXFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				YACC = /usr/bin/bison;
+				YACC_GENERATED_FILE_STEM = InputFileStem;
 			};
 			name = Release;
 		};
