@@ -76,6 +76,7 @@ char* substr(const char *src, int m, int n)
 ".byte"    { return T_DBYTE;    }
 ".word"    { return T_DWORD;    }
 ".ascii"   { return T_DASCII;   }
+".begin"   { return T_DBEGIN;   }
 
 "r0-1" { return T_AB; }
 "r2-3" { return T_CD; }

@@ -113,7 +113,7 @@ void appendDefinition(Definitions* definitions, Definition definition)
 
 %token T_NEWLINE T_PLUS T_MINUS T_MULTIPLY T_DIVIDE T_BSHL T_BSHR T_BAND T_BNOT T_BLOR T_BXOR T_LEFT T_RIGHT T_COMMA T_POUND T_PERCENT T_AMPERSAND T_EQUALS T_CARAT T_COLON
 
-%token T_DORG T_DDEFINE T_DBYTE T_DWORD T_DASCII
+%token T_DORG T_DDEFINE T_DBYTE T_DWORD T_DASCII T_DBEGIN
 
 %token T_A T_B T_C T_D T_AB T_CD T_F T_IP
 
@@ -179,6 +179,7 @@ comment_opt:
 		   | comment;
 
 directive: T_DORG expression { code.addr = $2; }
+         | T_DBEGIN { code.addr = 0x8000; }
 		 | T_DBYTE expression { emit8($2); }
 		 | T_DWORD expression { emit16($2); }
          | T_DDEFINE T_TEXT T_EQUALS expression
