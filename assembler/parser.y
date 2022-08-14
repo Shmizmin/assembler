@@ -533,7 +533,7 @@ pop_instruction: T_POP     { emit8(POP_DISCARD); }
 dref_instruction: T_DREF T_AB T_COMMA T_A { emit8(DEREF_AB_A); }
 				| T_DREF T_CD T_COMMA T_C { emit8(DEREF_CD_C); }
                 | T_DREF T_AB T_COMMA error
-                | T_DREF error T_COMMA error;
+                | T_DREF T_CD T_COMMA error;
                 
 imm: T_POUND   expression { $$ = $2; };
 mem: T_PERCENT expression { $$ = $2; };
