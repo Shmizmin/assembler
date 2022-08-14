@@ -39,10 +39,10 @@ char* substr(const char *src, int m, int n)
 
 %%
     
-[ \t]       ; //whitespace is skipped
-[0-9]+      { yylval.ival = strtol(CAPTURE_I_LMI(0, 0), NULL, 10); return T_DEC; }
-\$[0-9a-f]+ { yylval.ival = strtol(CAPTURE_I_LMI(1, 0), NULL, 16); return T_HEX; }
-0b[0-1]+    { yylval.ival = strtol(CAPTURE_I_LMI(2, 0), NULL, 2);  return T_BIN; }
+[ \t]          ; //whitespace is skipped
+[0-9]+         { yylval.ival = strtol(CAPTURE_I_LMI(0, 0), NULL, 10); return T_DEC; }
+\$[0-9a-fA-F]+ { yylval.ival = strtol(CAPTURE_I_LMI(1, 0), NULL, 16); return T_HEX; }
+0b[0-1]+       { yylval.ival = strtol(CAPTURE_I_LMI(2, 0), NULL, 2);  return T_BIN; }
 
 \n   { return T_NEWLINE;   }
 "+"  { return T_PLUS;      }
