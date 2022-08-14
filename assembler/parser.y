@@ -597,7 +597,7 @@ int main(int argc, const char** argv)
 	yydebug = 1;
 #endif
 	
-	const char* fmt = "File %s could not be opened for %s.\nExiting...\n";
+	const char* fmt = "[Error] File %s could not be opened for %s.\nExiting...\n";
 	
 #if defined file
 	const char* filepath = argv[1];
@@ -626,12 +626,12 @@ int main(int argc, const char** argv)
 
 	if (!final)
 	{
-        yyerror(fmt, filepath, "reading");
+        fprintf(stderr, fmt, filepath, "reading");
 	}
 #if defined dbg
 	else
 	{
-		printf("Reading...\n");
+        printf("Reading...\n");
 	}
 #endif
 	
@@ -673,7 +673,7 @@ int main(int argc, const char** argv)
 		
 		if (!found)
 		{
-            yyerror("Label %s is undefined\n", referenced_label.name);
+            fprintf(stderr, "[Error] Label %s is undefined\n", referenced_label.name);
 		}
 	}
 	
@@ -686,7 +686,7 @@ int main(int argc, const char** argv)
 	
 	if (!output)
 	{
-        yyerror(fmt, outfile, "writing");
+        fprintf(stderr, fmt, outfile, "writing");
 	}
 	
 	fwrite(&code.bytes[0], sizeof(code.bytes[0]), (USHRT_MAX + 1), output);
