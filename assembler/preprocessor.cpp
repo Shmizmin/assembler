@@ -1,15 +1,16 @@
 #include "preprocessor.h"
 
-#include <string_view>
-#include <filesystem>
+#include <cstdio>
 #include <cstdlib>
-#include <fstream>
+
 #include <sstream>
+#include <fstream>
+#include <filesystem>
+
+
+#include <regex>
 #include <string>
 #include <vector>
-#include <regex>
-
-#include <cstdio>
 
 namespace
 {
@@ -35,7 +36,6 @@ namespace
             start_pos += to.length();
         }
     }
-
     
     struct Macro
     {
@@ -43,8 +43,6 @@ namespace
         std::vector<std::string> args;
         std::string code;
     };
-
-    std::vector<Macro> defined_macros, invoked_macros;
 }
 
 
@@ -57,6 +55,8 @@ extern "C"
         std::regex mcro(R"((\.macro ([a-z][a-zA-Z0-0_]*) = \((([a-zA-Z])(, [a-zA-Z])*)?\)\:\s*\{([^\}]*)\}))");
         std::regex invk(R"((([a-z][a-zA-Z0-9_]*)\(([^\,\)]*\s*(\,[^\,\)]*)*)?\)))");
         //fix the invoke macro, its capturing wayy too much
+        
+        std::vector<Macro> defined_macros, invoked_macros;
         
 		std::smatch matches;
 		while (std::regex_search(src, matches, incl))
@@ -74,7 +74,6 @@ extern "C"
 			}
 			
             replace(src, matches[1], buffer);
-			//src = std::regex_replace(src, incl, buffer);
 		}
         
         while (std::regex_search(src, matches, mcro))
@@ -103,8 +102,6 @@ extern "C"
             defined_macros.emplace_back(macro);
             
             replace(src, matches[1], "");
-            
-            //src = std::regex_replace(src, std::regex(matches.str(1)), "");
         }
         
         while (std::regex_search(src, matches, invk))
@@ -164,21 +161,23 @@ extern "C"
             {
                 std::string copy = defined_macro.code;
                 replace(src, matches[1], copy);
-                //src = std::regex_replace(src, invk, copy);
             }
         }
         
-        //to expand macro:
-        //take temp var names out from arguments and paste in actual args
-            //make sure to count correct number of argumnets for error handling
-        //replace macro invokations in source file with newly created source
-		
         
-		//for (auto i = 0; i < src.length(); ++i)
-		//{
-		//	putchar(src[i]);
-		//}
-		
+        std::string_view end = ".end";
+        auto pos = src.find(end);
+        
+        if (pos == std::string::npos)
+        {
+            std::fprintf(stderr, "[Error] Could not find viable end token\nExiting...\n");
+            std::exit(1);
+        }
+        
+        
+        src = src.substr(0, pos + end.length());
+        
+        
 		return strdup(src.c_str());
 	}
 

@@ -77,6 +77,7 @@ char* substr(const char *src, int m, int n)
 ".word"    { return T_DWORD;    }
 ".ascii"   { return T_DASCII;   }
 ".begin"   { return T_DBEGIN;   }
+".end"     { return T_DEND;     }
 
 "r0-1" { return T_AB; }
 "r2-3" { return T_CD; }

@@ -113,7 +113,7 @@ void appendDefinition(Definitions* definitions, Definition definition)
 
 %token T_NEWLINE T_PLUS T_MINUS T_MULTIPLY T_DIVIDE T_BSHL T_BSHR T_BAND T_BNOT T_BLOR T_BXOR T_LEFT T_RIGHT T_COMMA T_POUND T_PERCENT T_AMPERSAND T_EQUALS T_CARAT T_COLON
 
-%token T_DORG T_DDEFINE T_DBYTE T_DWORD T_DASCII T_DBEGIN
+%token T_DORG T_DDEFINE T_DBYTE T_DWORD T_DASCII T_DBEGIN T_DEND
 
 %token T_A T_B T_C T_D T_AB T_CD T_F T_IP
 
@@ -135,7 +135,7 @@ void appendDefinition(Definitions* definitions, Definition definition)
 
 %%
 	
-    program: lines;
+    program: lines T_DEND;
 	
 lines:
 	 | lines line;
@@ -591,7 +591,7 @@ expression: number { $$ = $1; }
 int main(int argc, const char** argv)
 {
 #define file
-//#define dbg
+#define dbg
 	
 #if defined dbg
 	yydebug = 1;
